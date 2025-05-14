@@ -2,7 +2,7 @@ name: "Setup AWS Infra"
 
 on:
   workflow_dispatch:
-  
+
 
 jobs:
   setup-backend-infra:
@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: |
           cd ./infrastructure
-          terraform init -backend-config="bucket=${{vars.BUCKETNAME}}" -backend-config="dynamodb_table=${{vars.DYNAMODBTABLE}}" -backend-config="region=${{vars.AWS_REGION}}" -backend-config="key=terraform.tfstate"
+          terraform init -backend-config="bucket=${{vars.BUCKETNAME}}" -backend-config="dynamodb_table=${{vars.DYNAMODBTABLE}}" -backend-config="region=${{vars.AWS_REGION}}" -backend-config="key=terraformlb.tfstate"
       
       - name: plan terraform
         shell: bash
@@ -58,5 +58,5 @@ jobs:
           cd ./infrastructure
           echo "environment = \"dev\"" > terraform.tfvars
           echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
-          echo "count = \"${{vars.INSTANCE_COUNT}}\"" >> terraform.tfvars
+          echo "instance_count = \"${{vars.instance_count}}\"" >> terraform.tfvars
           terraform plan   
