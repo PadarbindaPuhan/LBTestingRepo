@@ -16,11 +16,11 @@ variable "instance_count" {
 
 
 # Add this block if it doesn't already exist
-variable "tag_name" {
-  description = "Tags to apply to the EC2 instances"
-  type        = map(string)
-  default     = {}
-}
+# variable "tag_name" {
+#   description = "Tags to apply to the EC2 instances"
+#   type        = map(string)
+#   default     = {}
+# }
 
 variable "instance_names" {
   type    = list(string)
