@@ -1,0 +1,62 @@
+name: "Setup AWS Infra"
+
+on:
+  workflow_dispatch:
+  
+
+jobs:
+  setup-backend-infra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: install powershell dependencies
+        run: |
+          pwsh -Command "Install-Module -Name AWSPowerShell.NetCore -Force -SkipPublisherCheck -AllowClobber -Scope CurrentUser"
+          pwsh -Command "Install-Module -Name AWS.Tools.Common -Force"
+
+      - name: autheticate AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{vars.AWS_REGION}}
+      
+      - name: create backend
+        shell: pwsh
+        run: |
+          cd ./scripts
+          ./create-backend.ps1 -bucketName "${{vars.BUCKETNAME}}" -dynamoDbTableName "${{vars.DYNAMODBTABLE}}" -region "${{vars.AWS_REGION}}"
+  
+  setup-plan-infra:
+    runs-on: ubuntu-latest
+    needs: setup-backend-infra
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: install terraform
+        uses: hashicorp/setup-terraform@v3
+      
+      - name: autheticate AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{vars.AWS_REGION}}
+      
+      - name: initialize terraform
+        shell: bash
+        run: |
+          cd ./infrastructure
+          terraform init -backend-config="bucket=${{vars.BUCKETNAME}}" -backend-config="dynamodb_table=${{vars.DYNAMODBTABLE}}" -backend-config="region=${{vars.AWS_REGION}}" -backend-config="key=terraform.tfstate"
+      
+      - name: plan terraform
+        shell: bash
+        run: |
+          cd ./infrastructure
+          echo "environment = \"dev\"" > terraform.tfvars
+          echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
+          echo "count = \"${{vars.INSTANCE_COUNT}}\"" >> terraform.tfvars
+          terraform plan   

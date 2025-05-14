@@ -1,7 +1,0 @@
-name: "Setup AWS Infra"
-
-on:
-  push:
-    branches-ignore:
-      - main
-  pull_request:
