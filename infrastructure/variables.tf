@@ -21,3 +21,8 @@ variable "tag_name" {
   type        = map(string)
   default     = {}
 }
+
+variable "instance_names" {
+  type    = list(string)
+  default = ["web-1", "web-2", "web-3", "web-4", "web-5"]
+}
