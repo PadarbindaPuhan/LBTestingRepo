@@ -13,3 +13,15 @@ variable "instance_count" {
   type        = number
   default     = 1
 }
+variable "instance_names" {
+  description = "List of instance names"
+  type        = list(string)
+  default     = ["web-1", "web-2", "web-3", "web-4", "web-5"]
+}
+
+# Add this block if it doesn't already exist
+variable "tag_name" {
+  description = "Tags to apply to the EC2 instances"
+  type        = map(string)
+  default     = {}
+}

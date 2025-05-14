@@ -37,3 +37,9 @@ variable "key_pair" {
   description = "The name of the key pair to use for SSH access"
   type        = string
 }
+
+variable "tag_name" {
+  description = "value of the tag name"
+  type        = string
+  default     = "web-app" 
+}
