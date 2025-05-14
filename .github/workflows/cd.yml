@@ -69,3 +69,12 @@ jobs:
           echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
           echo "instance_count = \"${{vars.instance_count}}\"" >> terraform.tfvars
           terraform apply -auto-approve 
+
+      - name: destroy terraform 
+        shell: bash 
+        run: |
+          cd ./infrastructure
+          echo "environment = \"dev\"" > terraform.tfvars
+          echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
+          echo "instance_count = \"${{vars.instance_count}}\"" >> terraform.tfvars
+          terraform destroy -auto-approve
