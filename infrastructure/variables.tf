@@ -8,11 +8,11 @@ variable "keypair_public_key" {
   type        = string
 }
 
-variable "instance_count" {
-  description = "Number of instances to create"
-  type        = number
-  default     = 1
-}
+# variable "instance_count" {
+#   description = "Number of instances to create"
+#   type        = number
+#   default     = 1
+# }
 
 
 # Add this block if it doesn't already exist
