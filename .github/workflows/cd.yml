@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: |
           cd ./infrastructure
-          terraform init -backend-config="bucket=${{vars.BUCKETNAME}}" -backend-config="dynamodb_table=${{vars.DYNAMODBTABLE}}" -backend-config="region=${{vars.AWS_REGION}}" -backend-config="key=terraformlb.tfstate"
+          terraform init -backend-config="bucket=${{vars.BUCKETNAME}}" -backend-config="dynamodb_table=${{vars.DYNAMODBTABLE}}" -backend-config="region=${{vars.AWS_REGION}}" -backend-config="key=terraform.tfstate"
       
       - name: plan terraform
         shell: bash
