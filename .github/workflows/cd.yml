@@ -58,7 +58,6 @@ jobs:
           cd ./infrastructure
           echo "environment = \"dev\"" > terraform.tfvars
           echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
-          # echo "instance_count = \"${{vars.instance_count}}\"" >> terraform.tfvars
           terraform plan   
 
       - name: apply terraform
@@ -67,7 +66,6 @@ jobs:
           cd ./infrastructure
           echo "environment = \"dev\"" > terraform.tfvars
           echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
-          # echo "instance_count = \"${{vars.instance_count}}\"" >> terraform.tfvars
           terraform apply -auto-approve 
 
       # - name: destroy terraform 
