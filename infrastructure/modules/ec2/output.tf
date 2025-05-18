@@ -1,4 +1,4 @@
-output "instance_private_ip" {
+output "instance_id" {
   description = "The ID of the web app instance"
-  value       = aws_instance.web_app.private_ip
+  value       = aws_instance.web_app.id
 }

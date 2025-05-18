@@ -8,11 +8,6 @@ module "blues" {
 
 } 
 
-# results of the above code in a array
-output "blue_servers" {
-  value = { for k, v in module.blues : k => v.instance_private_ip }
-}
-
 
 module "blue_target_group" {
   source = "../../modules/target_group"
@@ -20,6 +15,5 @@ module "blue_target_group" {
   port = 80
   protocol = "HTTP"
   vpc_id = var.vpc_id
-  target_ids = output.blue_servers.value
-
+  target_ids = module.blues[*].instance_id
 }
