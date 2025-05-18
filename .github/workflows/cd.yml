@@ -1,8 +1,7 @@
 name: "Setup AWS Infra"
 
 on:
-  workflow_dispatch:
-
+  push:
 
 jobs:
   setup-backend-infra:
@@ -59,20 +58,35 @@ jobs:
           echo "environment = \"dev\"" > terraform.tfvars
           echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
           terraform plan   
+  
+  setup-apply-infra:
+    runs-on: ubuntu-latest
+    environment: createinfra
+    needs: setup-plan-infra
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      - name: install terraform
+        uses: hashicorp/setup-terraform@v3
+      
+      - name: autheticate AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{vars.AWS_REGION}}
+      
+      - name: initialize terraform
+        shell: bash
+        run: |
+          cd ./infrastructure
+          terraform init -backend-config="bucket=${{vars.BUCKETNAME}}" -backend-config="dynamodb_table=${{vars.DYNAMODBTABLE}}" -backend-config="region=${{vars.AWS_REGION}}" -backend-config="key=terraform.tfstate"
+      
       - name: apply terraform
         shell: bash
         run: |
           cd ./infrastructure
           echo "environment = \"dev\"" > terraform.tfvars
           echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
-          terraform apply -auto-approve 
-
-      # - name: destroy terraform 
-      #   shell: bash 
-      #   run: |
-      #     cd ./infrastructure
-      #     echo "environment = \"dev\"" > terraform.tfvars
-      #     echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
-      #     echo "instance_count = \"${{vars.instance_count}}\"" >> terraform.tfvars
-      #     terraform destroy -auto-approve
+          terraform apply -auto-approve
