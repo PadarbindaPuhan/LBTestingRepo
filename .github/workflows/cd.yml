@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: |
           cd ./infrastructure
-          terraform init -backend-config="bucket=${{vars.BUCKETNAME}}" -backend-config="dynamodb_table=${{vars.DYNAMODBTABLE}}" -backend-config="region=${{vars.AWS_REGION}}" -backend-config="key=terraform.tfstate" -backend=true -force-copy -get=true -input=false
+          terraform init -backend-config="bucket=${{vars.BUCKETNAME}}" -backend-config="dynamodb_table=${{vars.DYNAMODBTABLE}}" -backend-config="region=${{vars.AWS_REGION}}" -backend-config="key=terraform.tfstate"
       
       - name: plan terraform
         shell: bash
@@ -60,13 +60,13 @@ jobs:
           echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
           terraform plan   
 
-      # - name: apply terraform
-      #   shell: bash
-      #   run: |
-      #     cd ./infrastructure
-      #     echo "environment = \"dev\"" > terraform.tfvars
-      #     echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
-      #     terraform apply -auto-approve 
+      - name: apply terraform
+        shell: bash
+        run: |
+          cd ./infrastructure
+          echo "environment = \"dev\"" > terraform.tfvars
+          echo "keypair_public_key = \"${{secrets.ACCESS_KEY_PAIR}}\"" >> terraform.tfvars
+          terraform apply -auto-approve 
 
       # - name: destroy terraform 
       #   shell: bash 
