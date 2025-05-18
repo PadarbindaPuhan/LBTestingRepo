@@ -20,5 +20,5 @@ module "blue_target_group" {
   port = 80
   protocol = "HTTP"
   vpc_id = var.vpc_id
-  target_ids =  module.blues.*.instance_id
+  target_ids =  module.blues.instance_id
 }
