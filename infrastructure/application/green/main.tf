@@ -9,7 +9,7 @@ module "greens" {
 
 # # results of the above code in a array
 locals {
-  all_green_servers = [for m in values(module.blues) : m.instance_id]
+  all_green_servers = [for m in values(module.greens) : m.instance_id]
 }
 
 
