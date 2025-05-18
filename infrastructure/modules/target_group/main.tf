@@ -6,8 +6,9 @@ resource "aws_lb_target_group" "tg" {
 }
 
 resource "aws_lb_target_group_attachment" "tg_attachment" {
-  for_each        = tomap(var.target_ids)
+  count = length(var.target_ids)
+  # for_each        = tomap(var.target_ids)
   target_group_arn = aws_lb_target_group.tg.arn
-  target_id       = each.value
+  target_id       = var.target_ids[count.index]
   port            = var.port
 }
