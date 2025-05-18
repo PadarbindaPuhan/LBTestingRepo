@@ -1,10 +1,11 @@
 module "blues" {
   for_each      = toset(var.blue_servers)
+  tag_name = each.value
   source = "../../modules/ec2"
   environment = var.environment
   security_groups = var.security_groups
   key_pair = var.key_pair
-  tag_name = var.tag_name
+  #tag_name = var.tag_name
 
 } 
 
