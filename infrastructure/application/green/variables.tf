@@ -41,7 +41,7 @@ variable "key_pair" {
 variable "tag_name" {
   description = "value of the tag name"
   type        = string
-  default     = "green-web-app" 
+  default     = "green" 
 }
 
 variable "green_servers" {
