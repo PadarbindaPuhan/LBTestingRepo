@@ -20,6 +20,7 @@ module "blue_servers" {
   environment   = var.environment
   security_groups = [module.allow_all_security_group.security_group_id]
   key_pair      = module.keypair.key_name
+  availability_zone = "us-west-2a"
   
 }
 
