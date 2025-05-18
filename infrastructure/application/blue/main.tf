@@ -9,8 +9,8 @@ module "blues" {
 } 
 
 # # results of the above code in a array
-output "all_blue_servers" {
-  value = [for m in values(module.blues) : m.instance_id]
+locals {
+  all_blue_servers = [for m in values(module.blues) : m.instance_id]
 }
 
 
