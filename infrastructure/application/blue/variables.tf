@@ -47,7 +47,3 @@ variable "tag_name" {
 variable "blue_servers" {
   type    = list(string)
 }
-
-variable "blue_target_group" {
-  type    = list(string)
-}
