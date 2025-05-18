@@ -5,7 +5,7 @@ module "greens" {
   environment = var.environment
   security_groups = var.security_groups
   key_pair = var.key_pair
-  #tag_name = var.tag_name
+  availability_zone = var.availability_zone
 } 
 
 # # results of the above code in a array

@@ -47,3 +47,10 @@ variable "tag_name" {
 variable "blue_servers" {
   type    = list(string)
 }
+
+variable "availability_zone" {
+  description = "The availability zone to launch the instance in"
+  type        = string
+  default     = "us-west-2a"  
+  
+}
