@@ -24,7 +24,7 @@ module "blue_servers" {
 }
 
 module "green_servers" {
-  blue_servers = var.green_servers
+  green_servers = var.green_servers
   source        = "./application/green"
   ami           = "ami-075686beab831bb7f"
   instance_type = "t3.micro"
