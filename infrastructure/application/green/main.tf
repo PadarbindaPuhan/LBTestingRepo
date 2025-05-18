@@ -15,7 +15,7 @@ locals {
 
 module "blue_target_group" {
   source = "../../modules/target_group"
-  name = "blue-target-group"
+  name = "green-target-group"
   port = 80
   protocol = "HTTP"
   vpc_id = var.vpc_id
