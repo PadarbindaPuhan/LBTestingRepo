@@ -23,7 +23,7 @@ variable "vpc_id" {
 
 variable "target_ids" {
     description = "The target ID to attach to the target group"
-    type        = list(string)
+    type        = map(string)
     default     = []
 }
 
