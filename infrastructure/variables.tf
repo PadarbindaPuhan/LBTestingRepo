@@ -8,7 +8,12 @@ variable "keypair_public_key" {
   type        = string
 }
 
-variable "instance_names" {
+variable "blue_servers" {
   type    = list(string)
-  default = ["web-1", "web-2"]
+  default = ["blue-1", "blue-2"]
+}
+
+variable "green_servers" {
+  type    = list(string)
+  default = ["green-1", "green-2"]
 }
