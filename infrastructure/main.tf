@@ -25,7 +25,7 @@ module "blue_servers" {
 
 module "green_servers" {
   blue_servers = var.green_servers
-  source        = "./application/blue"
+  source        = "./application/green"
   ami           = "ami-075686beab831bb7f"
   instance_type = "t3.micro"
   subnet_id     = "subnet-0db2c89226baaf431"
